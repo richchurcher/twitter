@@ -15,8 +15,9 @@ Predictably, the client has strong opinions on which technologies they would lik
 npm install
 npm run knex migrate:latest
 npm run knex seed:run
-npm start
 ```
+
+`npm start` starts the Express server. `npm run dev` starts webpack's dev server. `npm run build` builds the front end code into the static folder used by Express.
 
 
 ## MVP
