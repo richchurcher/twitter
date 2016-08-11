@@ -1,0 +1,52 @@
+{
+  "name": "boilerplate-knex",
+  "version": "0.1.0",
+  "description": "Express boilerplate with Knex.js",
+  "main": "index.js",
+  "scripts": {
+    "knex": "knex",
+    "build": "webpack",
+    "dev": "webpack-dev-server --hot --inline",
+    "start": "node-inspector --web-port=8888 & nodemon --debug server/index.js",
+    "test": "tape 'tests/**/*.test.js' | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev-academy-challenges/boilerplate-knex.git"
+  },
+  "keywords": [
+    "eda",
+    "boilerplate"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dev-academy-challenges/boilerplate-knex/issues"
+  },
+  "homepage": "https://github.com/dev-academy-challenges/boilerplate-knex#readme",
+  "devDependencies": {
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.13.2",
+    "handlebars": "^4.0.5",
+    "jquery": "^3.1.0",
+    "node-inspector": "^0.12.8",
+    "nodemon": "^1.10.0",
+    "sqlite3": "^3.1.4",
+    "superagent": "^2.1.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.0",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "knex": "^0.11.9"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  }
+}
