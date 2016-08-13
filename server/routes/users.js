@@ -30,4 +30,23 @@ router.get('/:id', (req, res) => {
     })
 })
 
+router.post('/', (req, res) => {
+  knex('users')
+    .insert(req.body)
+    .then(id => {
+      // SQLite doesn't support the `returning` function in Knex
+      // If we want to return the newly created resource, we have
+      // to go get it
+      knex('users')
+        .select()
+        .where({ id: id[0] })
+        .then(user => {
+          res.status(201).json(user[0])
+        })
+    })
+    .catch(err => {
+      res.status(500).send(`DATABASE ERROR: ${err.message}`)
+    })
+})
+
 module.exports = router
