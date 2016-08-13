@@ -72,9 +72,9 @@ router.put('/:id', (req, res) => {
       }
       res.sendStatus(204)
     })
-    //.catch(err => {
-      //res.status(500).send(`DATABASE ERROR: ${err.message}`)
-    //})
+    .catch(err => {
+      res.status(500).send(`DATABASE ERROR: ${err.message}`)
+    })
 })
 
 module.exports = router
