@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
       'users.name as username',
       'tweets.user_id as user_id',
       'content')
+    .select('name', 'content')
     .then(tweets => {
       res.json(tweets)
     })
