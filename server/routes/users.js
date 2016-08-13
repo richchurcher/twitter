@@ -49,4 +49,18 @@ router.post('/', (req, res) => {
     })
 })
 
+router.put('/:id', (req, res) => {
+  knex('users')
+    .update(req.body)
+    .where('id', req.params.id)
+    .then(result => {
+      if (result === 0) {
+        return res.sendStatus(404)
+      }
+      res.sendStatus(204)
+    })
+    .catch(err => {
+      res.status(500).send(`DATABASE ERROR: ${err.message}`)
+    })
+})
 module.exports = router

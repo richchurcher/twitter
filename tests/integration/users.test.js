@@ -17,7 +17,7 @@ test('/users returns an array', t => {
     })
 })
 
-// Prerequisite: requires seed to have run!
+// Prerequisite: requires seed to have run
 test('/users/:id returns the correct ', t => {
   const expected = {
     id: 99901, 
@@ -53,7 +53,28 @@ test('POST /users creates a new user', t => {
       t.equal(actual.email, expected.email)
       t.end()
     })
+})
 
+// Prerequisite: requires GET routes to be working
+test('PUT /users/:id changes a user', t => {
+  const expected = {
+    name: 'Flargle Arkvargle',
+    email: 'sombrero@umbrella'
+  }
+  request(app)
+    .get('/api/users')
+    .end((err, res) => {
+      const id = res.body[0].id
+      const modified = Object.assign({ id: id }, expected)
+      request(app)
+        .put(`/api/users/${id}`)
+        .send(modified)
+        .expect(204)
+        .end((err, res) => {
+          t.equal(err, null)
+          t.end()
+        })
+    })
 })
 
 test.onFinish(() => {
