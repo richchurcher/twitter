@@ -2,6 +2,7 @@ const bodyParser = require('body-parser')
 const express = require('express')
 
 const users = require('./routes/users')
+const tweets = require('./routes/tweets')
 
 const PORT = 3000
 
@@ -14,6 +15,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/users', users)
+app.use('/api/tweets', tweets)
 
 app.listen(PORT, () => {
   console.log('Listening on port', PORT)

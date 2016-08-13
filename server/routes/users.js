@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   knex('users')
     .select()
-    .where('id', req.params.id)
+    .where('id', parseInt(req.params.id, 10))
     .then(user => {
       if (user.length === 0) {
         res.sendStatus(404)
