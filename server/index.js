@@ -1,7 +1,7 @@
 const bodyParser = require('body-parser')
 const express = require('express')
 
-const index = require('./routes/index')
+const users = require('./routes/users')
 
 const PORT = 3000
 
@@ -13,8 +13,10 @@ app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/public/index.html`)
 })
 
-app.get('/api/', index)
+app.use('/api/users', users)
 
 app.listen(PORT, () => {
   console.log('Listening on port', PORT)
 })
+
+module.exports = app

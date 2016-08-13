@@ -1,18 +1,18 @@
-var express = require('express')
-var development = require('../knexfile').development
-var knex = require('knex')(development)
+const express = require('express')
+const development = require('../../knexfile').development
+const knex = require('knex')(development)
 
-module.exports = {
-  get: get
-}
+const router = express.Router()
 
-function get (req, res) {
+router.get('/', (req, res) => {
   knex('users')
     .select()
-    .then(function (users) {
-      res.json({ users: users })
+    .then(users => {
+      res.json(users)
     })
-    .catch(function (err) {
+    .catch(err => {
       res.status(500).send('DATABASE ERROR: ' + err.message)
     })
-}
+})
+
+module.exports = router
