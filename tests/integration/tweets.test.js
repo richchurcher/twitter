@@ -20,9 +20,10 @@ test('/tweets returns an array', t => {
 // Prerequisite: requires seed to have run!
 test('/tweets/:id returns the correct tweet', t => {
   const expected = {
-    id: 88801,
-    content: 'A tweet.', 
-    name: 'Ambitious Aardvark'
+    content: 'More tweeting.',
+    id: 88809,
+    user_id: 99905,
+    username: 'Exuberant Elephant'
   }
   request(app)
     .get(`/api/tweets/${expected.id}`)
@@ -52,6 +53,25 @@ test('POST /tweets/:id adds a tweet', t => {
       t.equal(actual.content, expected.content)
       t.equal(actual.user_id, expected.user_id)
       t.end()
+    })
+})
+
+test('PUT /tweets/:id modifies a tweet', t => {
+  const expected = 'I have nothing to say, therefore I must say it.'
+  request(app)
+    .get('/api/tweets')
+    .end((err, res) => {
+      const modified = res.body[0]
+      modified.content = expected
+      delete modified.username
+      request(app)
+        .put(`/api/tweets/${modified.id}`)
+        .send(modified)
+        .expect(204)
+        .end((err, res) => {
+          t.equal(err, null)
+          t.end()
+        })
     })
 })
 

@@ -7,7 +7,10 @@ const router = express.Router()
 router.get('/', (req, res) => {
   knex('tweets')
     .join('users', 'tweets.user_id', 'users.id')
-    .select('name', 'content')
+    .select('tweets.id as id',
+      'users.name as username',
+      'tweets.user_id as user_id',
+      'content')
     .then(tweets => {
       res.json(tweets)
     })
@@ -19,7 +22,10 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   knex('tweets')
     .join('users', 'tweets.user_id', 'users.id')
-    .select('tweets.id as id', 'name', 'content')
+    .select('tweets.id as id',
+      'users.name as username',
+      'tweets.user_id as user_id',
+      'content')
     .where('tweets.id', parseInt(req.params.id, 10))
     .then(tweet => {
       if (tweet.length === 0) {
@@ -54,6 +60,21 @@ router.post('/', (req, res) => {
     .catch(err => {
       res.status(500).send(`DATABASE ERROR: ${err.message}`)
     })
+})
+
+router.put('/:id', (req, res) => {
+  knex('tweets')
+    .update(req.body)
+    .where('id', req.params.id)
+    .then(result => {
+      if (result === 0) {
+        return res.sendStatus(404)
+      }
+      res.sendStatus(204)
+    })
+    //.catch(err => {
+      //res.status(500).send(`DATABASE ERROR: ${err.message}`)
+    //})
 })
 
 module.exports = router
