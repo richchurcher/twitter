@@ -20,9 +20,9 @@ test('/users returns an array', t => {
 // Prerequisite: requires seed to have run
 test('/users/:id returns the correct ', t => {
   const expected = {
-    id: 99901, 
-    name: 'Ambitious Aardvark', 
-    email: 'aardvark@example.org'
+    email: 'impala@example.org',
+    id: 99909,
+    name: 'Intransigent Impala'
   }
   request(app)
     .get(`/api/users/${expected.id}`)
@@ -74,6 +74,20 @@ test('PUT /users/:id changes a user', t => {
           t.equal(err, null)
           t.end()
         })
+    })
+})
+
+test('/:id/followers returns an array', t => {
+  const expected = true
+  request(app)
+    .get('/api/users/99906/followers')
+    .expect(200)
+    .expect('Content-Type', /json/)
+    .end((err, res) => {
+      const actual = Array.isArray(res.body)
+      t.equal(err, null)
+      t.equal(actual, expected)
+      t.end()
     })
 })
 

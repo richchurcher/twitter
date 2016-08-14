@@ -63,4 +63,21 @@ router.put('/:id', (req, res) => {
       res.status(500).send(`DATABASE ERROR: ${err.message}`)
     })
 })
+
+router.get('/:id/followers', (req, res) => {
+  knex('followers')
+    .join('users', 'followers.follower_id', 'users.id')
+    .select(
+      'users.name as username',
+      'users.id as user_id'
+    )
+    .where('user_id', req.params.id)
+    .then(followers => {
+      res.json(followers)
+    })
+    .catch(err => {
+      res.status(500).send(`DATABASE ERROR: ${err.message}`)
+    })
+})
+
 module.exports = router
