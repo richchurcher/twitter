@@ -80,12 +80,27 @@ router.get('/:id/followers', (req, res) => {
     })
 })
 
+router.post('/:id/followers', (req, res) => {
+  knex('followers')
+    .insert(req.body)
+    .then(id => {
+      knex('followers')
+        .select()
+        .where({ id: id[0] })
+        .then(follower => {
+          res.status(201).json(follower[0])
+        })
+    })
+    .catch(err => {
+      res.status(500).send(`DATABASE ERROR: ${err.message}`)
+    })
+})
+
 router.delete('/:id/followers/:fid', (req, res) => {
   knex('followers')
     .where('follower_id', req.params.fid)
     .del()
     .then(rows => {
-      console.log(rows)
       if (rows === 0) {
         return res.sendStatus(404)
       }

@@ -91,7 +91,26 @@ test('/users/:id/followers returns an array', t => {
     })
 })
 
-test('DELETE /usrs/:id/followers/:fid removes a follower', t => {
+test('POST /users/:id/followers adds a follower', t => {
+  const expected = {
+    user_id: 99906,
+    follower_id: 99910
+  }
+  request(app)
+    .post('/api/users/99910/followers')
+    .send(expected)
+    .expect(201)
+    .expect('Content-Type', /json/)
+    .end((err, res) => {
+      t.equal(err, null)
+      const actual = res.body
+      t.equal(actual.user_id, expected.user_id)
+      t.equal(actual.follower_id, expected.follower_id)
+      t.end()
+    })
+})
+
+test('DELETE /users/:id/followers/:fid removes a follower', t => {
   request(app)
     .delete('/api/users/99906/followers/99919')
     .expect(204)
