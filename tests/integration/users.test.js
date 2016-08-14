@@ -77,7 +77,7 @@ test('PUT /users/:id changes a user', t => {
     })
 })
 
-test('/:id/followers returns an array', t => {
+test('/users/:id/followers returns an array', t => {
   const expected = true
   request(app)
     .get('/api/users/99906/followers')
@@ -87,6 +87,16 @@ test('/:id/followers returns an array', t => {
       const actual = Array.isArray(res.body)
       t.equal(err, null)
       t.equal(actual, expected)
+      t.end()
+    })
+})
+
+test('DELETE /usrs/:id/followers/:fid removes a follower', t => {
+  request(app)
+    .delete('/api/users/99906/followers/99919')
+    .expect(204)
+    .end((err, res) => {
+      t.equal(err, null)
       t.end()
     })
 })
